@@ -31,5 +31,9 @@
         <!--Telling the user about the coupon-->
         <TextBlock HorizontalAlignment="Left" Margin="20,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-gb" Text="Use hello123 to get 20% off your order!"/></TextBlock>
 
+        <!--Button to download the list as a txt file-->
+        
+        <Button Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="440,270,0,0" Click="SaveCheckout_Click" Background="#FFBBF4FF"/>
+
     </Grid>
 </Window>
