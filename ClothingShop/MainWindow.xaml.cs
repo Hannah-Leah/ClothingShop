@@ -140,7 +140,7 @@ namespace ClothingShop
         // Filter items based on selected category
         private void FilterItems()
         {
-            string selectedCategory = ((ComboBoxItem)CategoryComboBox.SelectedItem)?.Content.ToString();
+            string selectedCategory = ((ComboBoxItem)CategoryComboBox.SelectedItem).Content.ToString();
 
             if (selectedCategory == "All Categories")
             {
@@ -153,7 +153,7 @@ namespace ClothingShop
         }
 
         // Handle category selection change
-        private void CategoryComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             FilterItems(); // Refresh the list based on the selected category
         }
@@ -164,6 +164,121 @@ namespace ClothingShop
             CheckoutWindow checkoutWindow = new CheckoutWindow(purchasedItems, budget);
             checkoutWindow.Show();
         }
+
+        // This function saves the list of items to a CSV file
+        private void SaveItemsToCsv(string filePath)
+        {
+            // Create a list to store the CSV lines, starting with the header line
+            var csvLines = new List<string>
+    {
+        "Name;Price;ImageUrl;Description;Category" // CSV header line with semicolons
+    };
+
+            // Loop through each item in the items list
+            foreach (var item in items)
+            {
+                // Replace newlines in the description with spaces (simplify the description)
+                string description = item.Description.Replace("\n", " ").Replace("\r", " "); // Convert multiline to single line
+
+                // Convert each item's properties to a CSV line, separating them by semicolons
+                csvLines.Add($"{item.Name};{item.Price};{item.ImageUrl};{description};{item.Category}");
+            }
+
+            // Write all the lines to the file at the specified filePath
+            System.IO.File.WriteAllLines(filePath, csvLines);
+
+            
+            MessageBox.Show("Items saved to CSV successfully.");
+        }
+
+
+
+
+
+        // This function loads items from a CSV file and populates the items list
+        private void LoadItemsFromCsv(string filePath)
+        {
+            try
+            {
+                // Read all lines from the CSV file, skipping the header line (we use Skip(1) to ignore the first line)
+                var csvLines = System.IO.File.ReadAllLines(filePath).Skip(1);
+
+                // Clear any existing items in the list before loading new ones
+                items.Clear();
+
+                // Loop through each line in the CSV file
+                foreach (var line in csvLines)
+                {
+                    // Split the line by semicolons 
+                    var columns = line.Split(';');
+
+                    // Check if the line has exactly 5 columns (we expect Name, Price, ImageUrl, Description, and Category)
+                    if (columns.Length == 5)
+                    {
+                        // Create a new Item object using the data from the CSV columns
+                        var item = new Item
+                        {
+                            Name = columns[0],
+                            Price = double.Parse(columns[1]),  // Parse the Price from string to double
+                            ImageUrl = columns[2],
+                            Description = columns[3], // Description is now a single line
+                            Category = columns[4]
+                        };
+
+                        // Add the new item to the items list
+                        items.Add(item);
+                    }
+                }
+
+                // Refresh the ListView to display the loaded items
+                ItemList.ItemsSource = null;
+                ItemList.ItemsSource = items;
+
+                // Apply any active category filter (if needed)
+                FilterItems();
+
+             
+                MessageBox.Show("Items loaded from CSV successfully.");
+            }
+            catch (Exception ex)
+            {
+                
+                MessageBox.Show($"An error occurred while loading items: {ex.Message}");
+            }
+        }
+
+
+
+
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv",
+                DefaultExt = "csv"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveItemsToCsv(saveFileDialog.FileName);
+            }
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV Files (*.csv)|*.csv",
+                DefaultExt = "csv"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                LoadItemsFromCsv(openFileDialog.FileName);
+            }
+        }
     }
 
     public class Item
@@ -171,7 +286,7 @@ namespace ClothingShop
         public string Name { get; set; }
         public double Price { get; set; }
         public string ImageUrl { get; set; }
-        public string Description { get; set; } // Added description property
+        public string Description { get; set; } 
         public string Category { get; set; }
     }
 }

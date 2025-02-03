@@ -86,5 +86,7 @@
 
         <!--Telling the user how to purchase an item-->
         <TextBlock HorizontalAlignment="Left" Margin="17,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FFFFDEDE" Foreground="#FFB70202" Cursor="Arrow"><Run Language="en-gb" Text="Double click an item to purchase it!"/></TextBlock>
+        <Button x:Name="btnSave" BorderThickness="2" Content="Save items" HorizontalAlignment="Left" Margin="228,53,0,0" VerticalAlignment="Top" Click="btnSave_Click" Height="40" Width="90" Background="#FFC4CAFF" FontFamily="Arial Rounded MT Bold" FontSize="14"/>
+        <Button x:Name="btnLoad" BorderThickness="2" Content="Load items" HorizontalAlignment="Left" Margin="323,53,0,0" VerticalAlignment="Top" Click="btnLoad_Click" Height="40" Width="90" Background="#FFD3ECFF" FontFamily="Arial Rounded MT Bold" FontSize="14"/>
     </Grid>
 </Window>
