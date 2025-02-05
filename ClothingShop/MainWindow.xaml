@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClothingShop.MainWindow"
+﻿<Window MinHeight="500" MinWidth="700" x:Class="ClothingShop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -26,7 +26,7 @@
         </ComboBox>
 
         <!-- ListView for displaying items in horizontal layout with resizable and larger items -->
-        <ListView x:Name="ItemList" BorderThickness="0" HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Margin="0,120,0,0" MouseDoubleClick="ItemList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView x:Name="ItemList" BorderThickness="0" HorizontalAlignment="Center"  VerticalAlignment="Stretch"  Margin="0,120,0,68" MouseDoubleClick="ItemList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- Use a WrapPanel to display items horizontally, with wrapping when necessary -->
