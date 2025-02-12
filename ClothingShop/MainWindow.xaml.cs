@@ -43,7 +43,7 @@ namespace ClothingShop
             BudgetText.Text = $"Budget: ${budget:F2}";
         }
 
-        private void ItemList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedItem = (Item)ItemList.SelectedItem;
         }
@@ -161,8 +161,15 @@ namespace ClothingShop
         // Navigate to the Checkout page
         private void CheckoutButton_Click(object sender, RoutedEventArgs e)
         {
-            CheckoutWindow checkoutWindow = new CheckoutWindow(purchasedItems, budget);
+            CheckoutWindow checkoutWindow = new CheckoutWindow(purchasedItems, budget, OnBudgetUpdated);
             checkoutWindow.Show();
+        }
+
+        // This function will be called to update the budget in MainWindow
+        private void OnBudgetUpdated(double updatedBudget)
+        {
+            budget = updatedBudget;
+            UpdateBudgetDisplay(); // Update the budget display after a change
         }
 
         // This function saves the list of items to a CSV file

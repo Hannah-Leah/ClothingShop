@@ -35,5 +35,8 @@
         
         <Button Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="440,270,0,0" Click="SaveCheckout_Click" Background="#FFBBF4FF"/>
 
+        <!--Button to delete-->
+        <Button Content="Delete Item" Click="DeletePurchasedItem_Click" Margin="593,272,73,132" />
+
     </Grid>
 </Window>
