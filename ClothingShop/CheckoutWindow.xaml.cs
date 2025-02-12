@@ -22,34 +22,12 @@ namespace ClothingShop
             PurchasedItemsList.ItemsSource = purchasedItems;
 
             // Calculate and display the total
-            double total = 0;
-            foreach (var item in purchasedItems)
-            {
-                total += item.Price;
-            }
-
-            TotalText.Text = $"Total: ${total:F2}";
+            UpdateTotalDisplay();
         }
 
         private void ApplyCoupon_Click(object sender, RoutedEventArgs e)
         {
-            double total = 0;
-            foreach (var item in purchasedItems)
-            {
-                total += item.Price;
-            }
-
-            // Check if the coupon code is correct
-            if (CouponTextBox.Text == "hello123")
-            {
-                double discount = total * 0.2;  // 20% discount
-                double finalTotal = total - discount;
-                DiscountText.Text = $"Discount Applied: ${discount:F2}. Final Total: ${finalTotal:F2}";
-            }
-            else
-            {
-                DiscountText.Text = "Invalid Coupon Code!";
-            }
+            UpdateCouponDisplay();
         }
 
         // Event handler for the save checkout button
@@ -113,13 +91,45 @@ namespace ClothingShop
             PurchasedItemsList.ItemsSource = null;
             PurchasedItemsList.ItemsSource = purchasedItems;
 
-            // Optionally, update the total cost after deletion
+            // Recalculate and update the total
+            UpdateTotalDisplay();
+
+            // Update coupon information
+            UpdateCouponDisplay();
+        }
+
+        // Method to update the total display after removing items
+        private void UpdateTotalDisplay()
+        {
             double total = 0;
             foreach (var item in purchasedItems)
             {
                 total += item.Price;
             }
+
             TotalText.Text = $"Total: ${total:F2}";
+        }
+
+        // Method to update the coupon display
+        private void UpdateCouponDisplay()
+        {
+            double total = 0;
+            foreach (var item in purchasedItems)
+            {
+                total += item.Price;
+            }
+
+            // Check if the coupon code is correct
+            if (CouponTextBox.Text == "hello123")
+            {
+                double discount = total * 0.2;  // 20% discount
+                double finalTotal = total - discount;
+                DiscountText.Text = $"Discount Applied: ${discount:F2}. Final Total: ${finalTotal:F2}";
+            }
+            else
+            {
+                DiscountText.Text = "Invalid Coupon Code!";
+            }
         }
     }
 }
